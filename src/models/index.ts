@@ -12,4 +12,4 @@ db.sequelize = sequelize;
 
 
 
-module.exports = db
+export default db;
