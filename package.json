@@ -1,5 +1,5 @@
 {
-  "name": "Node JS EPAM LEARNING COURSE",
+  "name": "EPAM LEARNING COURSE",
   "version": "1.0.0",
   "description": "Node JS EPAM LEARNING COURSE",
   "main": "dist/index.js",
@@ -16,6 +16,8 @@
     "dotenv": "^16.0.2",
     "express": "^4.17.1",
     "jest": "^26.0.0",
+    "pg": "^8.8.0",
+    "sequelize": "^6.23.1",
     "supertest": "^4.0.2",
     "ts-jest": "^26.5.6",
     "tslint": "^5.18.0",
@@ -28,6 +30,7 @@
     "@types/express": "^4.17.13",
     "@types/jest": "^25.2.3",
     "@types/node": "^14.17.16",
+    "@types/sequelize": "^4.28.14",
     "@types/supertest": "^2.0.11",
     "nodemon": "^2.0.3"
   }
