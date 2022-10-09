@@ -1,9 +1,11 @@
 import {UserDataMapper} from "../data-access/user-data-mapper.js";
 
 export class UserServices {
-    constructor(userModel, groupModel) {
+    constructor(userModel, groupModel, userGroupModel) {
         this.userModel = userModel;
         this.groupModel = groupModel;
+        this.userGroupModel = userGroupModel;
+
         this.mapper = new UserDataMapper();
     }
 
@@ -11,7 +13,7 @@ export class UserServices {
         const users = await this.userModel.findAll({
             attributes: ["name", "username", "id"],
             include: {model: this.groupModel},
-            through: { attributes: [] }
+            through: {attributes: []}
         });
 
         return users.map((user) => ({
@@ -21,7 +23,12 @@ export class UserServices {
     }
 
     getUser = async (id) => {
-        const user = await this.userModel.findByPk(id, {attributes: ["name", "username", "id"]});
+        const user = await this.userModel.findByPk(id, {
+                attributes: ["name", "username", "id"],
+                include: {model: this.groupModel},
+                through: {attributes: []}
+            }
+        );
         if (!user) {
             return {error: "User not found!"};
         }
@@ -46,6 +53,22 @@ export class UserServices {
         });
 
         return this.getUser(id);
+    }
+
+    assignPermission = async (userID, groupID) => {
+        const group = await this.groupModel.findByPk(groupID);
+        if (!group) {
+            return {error: "Group not found!"}
+        }
+
+        const user = await this.getUser(userID);
+        if (user.error) return user;
+
+        await this.userGroupModel.create({
+            userId: parseInt(userID),
+            groupId: groupID
+        });
+        return {success: "User added to group"}
     }
 
     deleteUser(id) {

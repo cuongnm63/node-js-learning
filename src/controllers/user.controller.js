@@ -4,7 +4,7 @@ import {UserServices} from "../services/user.services.js";
 
 export const userController = (app) => {
     const router = express.Router();
-    const userService = new UserServices(db.User, db.Group);
+    const userService = new UserServices(db.User, db.Group, db.UserGroup);
 
     router.get(`/`, async (req, res) => {
         res.json(await userService.getListUsers())
@@ -21,6 +21,10 @@ export const userController = (app) => {
     router.put(`/:id`, async (req, res) => {
         res.json(await userService.updateUser(parseInt(req.params.id), req.body))
     });
+
+    router.put(`/:id/assign/:group_id`, async (req, res) => {
+        res.json(await userService.assignPermission(req.params.id, req.params.group_id))
+    })
 
     router.delete(`/:id`, async (req, res) => {
         res.json(await userService.deleteUser(parseInt(req.params.id)));

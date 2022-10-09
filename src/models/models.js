@@ -16,9 +16,10 @@ const db = {};
 db.sequelize = sequelize;
 db.User = UserModel(sequelize);
 db.Group = GroupModel(sequelize);
+db.UserGroup = UserGroupModel(sequelize);
 
-db.User.belongsToMany(db.Group, {through: UserGroupModel(sequelize)});
-db.Group.belongsToMany(db.User, {through: UserGroupModel(sequelize)});
+db.User.belongsToMany(db.Group, {through: db.UserGroup});
+db.Group.belongsToMany(db.User, {through: db.UserGroup});
 
 
 export default db;
