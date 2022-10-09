@@ -71,7 +71,11 @@ export class UserServices {
         return {success: "User added to group"}
     }
 
-    deleteUser(id) {
+    deleteUser = async (id) => {
+        await this.userGroupModel.destroy({
+            where: {userId: parseInt(id)}
+        });
+
         return this.userModel.destroy({
             where: {id}
         })

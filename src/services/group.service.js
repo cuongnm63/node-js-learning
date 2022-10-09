@@ -1,6 +1,7 @@
 export class GroupService {
-    constructor(groupModel) {
+    constructor(groupModel, userGroupModel) {
         this.groupModel = groupModel;
+        this.userGroupModel = userGroupModel;
     }
 
     getListGroups = async () => await this.groupModel.findAll({})
@@ -28,7 +29,11 @@ export class GroupService {
         return this.getGroupByID(id);
     }
 
-    deleteGroup(id) {
+    deleteGroup = async (id) => {
+        await this.userGroupModel.destroy({
+            where: {groupId: id}
+        });
+
         return this.groupModel.destroy({
             where: {id}
         })

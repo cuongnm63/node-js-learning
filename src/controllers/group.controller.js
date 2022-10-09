@@ -4,7 +4,7 @@ import {GroupService} from "../services/group.service.js";
 
 export const groupController = (app) => {
     const router = express.Router();
-    const groupService = new GroupService(db.Group);
+    const groupService = new GroupService(db.Group, db.UserGroup);
 
     router.get(`/`, async (req, res) => {
         res.json(await groupService.getListGroups())
