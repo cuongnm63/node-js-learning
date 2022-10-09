@@ -3,11 +3,19 @@ import {PERMISSION, PERMISSION_ALLOWED} from "../enum/permission.enum.js";
 
 
 export const GroupModel = (sequelize) => sequelize.define("group", {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        primaryKey: true
+    },
     name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
     },
     permissions: {
-        type: Sequelize.ARRAY(Sequelize.TEXT)
+        type: Sequelize.ARRAY(Sequelize.TEXT),
+        allowNull: false
     }
 }, {
     validate: {

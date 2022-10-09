@@ -3,7 +3,8 @@ dotenv.config();
 import express from "express";
 import bodyParser from "body-parser";
 import {userController} from "./controllers/user.controller.js";
-import db from "./models/index.js";
+import db from "./models/models.js";
+import {groupController} from "./controllers/group.controller.js";
 
 
 const app = express();
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 
 
 userController(app);
+groupController(app);
 
 const PORT = process.env.APP_PORT || 1212;
 app.listen(PORT, () => {
