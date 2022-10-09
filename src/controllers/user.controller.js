@@ -4,7 +4,7 @@ import {UserServices} from "../services/user.services.js";
 
 export const userController = (app) => {
     const router = express.Router();
-    const userService = new UserServices(db.User);
+    const userService = new UserServices(db.User, db.Group);
 
     router.get(`/`, async (req, res) => {
         res.json(await userService.getListUsers())

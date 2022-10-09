@@ -1,13 +1,18 @@
 import {UserDataMapper} from "../data-access/user-data-mapper.js";
 
 export class UserServices {
-    constructor(userModel) {
+    constructor(userModel, groupModel) {
         this.userModel = userModel;
+        this.groupModel = groupModel;
         this.mapper = new UserDataMapper();
     }
 
     getListUsers = async () => {
-        const users = await this.userModel.findAll({attributes: ["name", "username", "id"]});
+        const users = await this.userModel.findAll({
+            attributes: ["name", "username", "id"],
+            include: {model: this.groupModel},
+            through: { attributes: [] }
+        });
 
         return users.map((user) => ({
             ...user.dataValues,
@@ -26,7 +31,6 @@ export class UserServices {
 
     createNewUser = async (user) => {
         const createdUser = await this.userModel.create(user);
-        console.log(createdUser);
 
         return this.getUser(createdUser.dataValues.id);
     }
