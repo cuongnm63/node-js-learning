@@ -2,7 +2,7 @@ import express from "express";
 import db from "../models/models.js";
 import {UserServices} from "../services/user.services.js";
 
-export const userController = (app) => {
+export const userController = (app, logger) => {
     const router = express.Router();
     const userService = new UserServices(db.User, db.Group, db.UserGroup);
 

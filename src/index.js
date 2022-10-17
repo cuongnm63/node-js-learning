@@ -5,12 +5,13 @@ import bodyParser from "body-parser";
 import {userController} from "./controllers/user.controller.js";
 import db from "./models/models.js";
 import {groupController} from "./controllers/group.controller.js";
-
+import logger from "./logging/logging-service.js";
+import {loggingRequest} from "./middleware/logger-middleware.js";
 
 const app = express();
 app.use(bodyParser.json());
 
-
+app.use(loggingRequest(logger))
 
 db.sequelize.sync()
     .then(() => {
@@ -25,8 +26,8 @@ app.get("/", (req, res) => {
 });
 
 
-userController(app);
-groupController(app);
+userController(app, logger);
+groupController(app, logger);
 
 const PORT = process.env.APP_PORT || 1212;
 app.listen(PORT, () => {

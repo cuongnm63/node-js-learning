@@ -1,6 +1,7 @@
 import express from "express";
 import db from "../models/models.js";
 import {GroupService} from "../services/group.service.js";
+import {loggingRequest} from "../middleware/logger-middleware.js";
 
 export const groupController = (app) => {
     const router = express.Router();
