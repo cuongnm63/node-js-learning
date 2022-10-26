@@ -5,13 +5,14 @@ import bodyParser from "body-parser";
 import {userController} from "./controllers/user.controller.js";
 import db from "./models/models.js";
 import {groupController} from "./controllers/group.controller.js";
-import logger from "./logging/logging-service.js";
+import infoLogger, {errorLogger} from "./logging/logging-service.js";
 import {loggingRequest} from "./middleware/logger-middleware.js";
+import process from 'node:process';
 
 const app = express();
 app.use(bodyParser.json());
 
-app.use(loggingRequest(logger))
+app.use(loggingRequest(infoLogger))
 
 db.sequelize.sync()
     .then(() => {
@@ -25,9 +26,30 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to Cuong Test" });
 });
 
+process.on('uncaughtException', (err, origin) => {
+    errorLogger.log('error', {
+        errorLogger: err.stack,
+        origin
+    });
 
-userController(app, logger);
-groupController(app, logger);
+});
+
+userController(app, infoLogger);
+groupController(app, infoLogger);
+
+
+function errorHandler (err, req, res, next) {
+    console.log("ERRRO HANDLER?");
+
+    if (res.headersSent) {
+        return next(err)
+    }
+    res.status(500)
+    res.render('error', { error: err })
+}
+
+app.use(errorHandler)
+
 
 const PORT = process.env.APP_PORT || 1212;
 app.listen(PORT, () => {

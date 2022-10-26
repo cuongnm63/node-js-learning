@@ -2,7 +2,7 @@ import winston from "winston";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const logger = winston.createLogger({
+const infoLogger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),
     defaultMeta: { service: 'http-service' },
@@ -13,10 +13,33 @@ const logger = winston.createLogger({
 });
 
 if (process.env.NODE_ENV !== 'production') {
-    logger.add(new winston.transports.Console({
+    infoLogger.add(new winston.transports.Console({
         format: winston.format.simple(),
     }));
 }
 
 
-export default logger;
+export default infoLogger;
+
+
+
+
+const errorLogger1 = winston.createLogger({
+    level: 'error',
+    format: winston.format.json(),
+    defaultMeta: { service: 'uncaughtException' },
+    transports: [
+        new winston.transports.File({ filename: 'error.log', level: 'error' }),
+        new winston.transports.Console(),
+    ],
+});
+
+
+if (process.env.NODE_ENV !== 'production') {
+    errorLogger1.add(new winston.transports.Console({
+        format: winston.format.simple(),
+    }));
+}
+
+
+export const errorLogger = errorLogger1;

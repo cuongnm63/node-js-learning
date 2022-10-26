@@ -4,7 +4,11 @@ export class GroupService {
         this.userGroupModel = userGroupModel;
     }
 
-    getListGroups = async () => await this.groupModel.findAll({})
+    getListGroups = async () => {
+        throw new Error("aasdmsakdm");
+
+        return await this.groupModel.findAll({});
+    }
 
     getGroupByID = async (id) => {
         const group = await this.groupModel.findByPk(id);

@@ -7,8 +7,10 @@ export const groupController = (app) => {
     const router = express.Router();
     const groupService = new GroupService(db.Group, db.UserGroup);
 
-    router.get(`/`, async (req, res) => {
-        res.json(await groupService.getListGroups())
+    router.get(`/`, async (req, res, next) => {
+        return res.json(await groupService.getListGroups()).catch((err) => {
+            next(err)
+        })
     });
 
     router.get(`/:id`, async (req, res) => {
