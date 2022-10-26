@@ -17,6 +17,7 @@
     "dotenv": "^16.0.2",
     "express": "^4.17.1",
     "jest": "^26.0.0",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.8.0",
     "sequelize": "^6.23.1",
     "supertest": "^4.0.2",

@@ -8,6 +8,7 @@ import {groupController} from "./controllers/group.controller.js";
 import infoLogger, {errorLogger} from "./logging/logging-service.js";
 import {loggingRequest} from "./middleware/logger-middleware.js";
 import process from 'node:process';
+import {securityController} from "./controllers/security.controller.js";
 
 const app = express();
 app.use(bodyParser.json());
@@ -36,6 +37,7 @@ process.on('uncaughtException', (err, origin) => {
 
 userController(app, infoLogger);
 groupController(app, infoLogger);
+securityController(app, infoLogger);
 
 
 function errorHandler (err, req, res, next) {
