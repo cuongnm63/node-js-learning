@@ -9,9 +9,12 @@ import infoLogger, {errorLogger} from "./logging/logging-service.js";
 import {loggingRequest} from "./middleware/logger-middleware.js";
 import process from 'node:process';
 import {securityController} from "./controllers/security.controller.js";
+import cors from "cors";
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors())
+
 
 app.use(loggingRequest(infoLogger))
 
