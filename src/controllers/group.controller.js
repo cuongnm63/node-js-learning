@@ -8,9 +8,7 @@ export const groupController = (app) => {
     const groupService = new GroupService(db.Group, db.UserGroup);
 
     router.get(`/`, async (req, res, next) => {
-        return res.json(await groupService.getListGroups()).catch((err) => {
-            next(err)
-        })
+        res.json(await groupService.getListGroups());
     });
 
     router.get(`/:id`, async (req, res) => {
