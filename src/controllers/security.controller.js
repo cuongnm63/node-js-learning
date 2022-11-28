@@ -10,7 +10,7 @@ export const securityController = (app) => {
         try {
             res.json(await securityServices.login(req.body))
         } catch (error) {
-            res.status(500).json({message: error})
+            res.status(401).json({message: "Invalid username or password"})
         }
     });
 

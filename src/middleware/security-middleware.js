@@ -4,10 +4,12 @@ import db from "../models/models.js";
 
 export const Security = {
     isLoggedIn: async (req, res, next) => {
-        if (!req.headers["Authorization"]) {
+        const authToken = req.headers["Authorization"] ?? req.headers["authorization"];
+
+        if (!authToken) {
             res.status(401).send("Unauthorized Error");
         } else {
-            const token = req.headers["Authorization"].replace("Bearer ", "");
+            const token = authToken.replace("Bearer ", "");
             try {
                 req.user = await jwt.verify(token, JWT_SECRET_KEY);
                 next();

@@ -9,7 +9,7 @@ export class SecurityServices {
     login = async ({username, password}) => {
         const user = await this.userModel.findOne({where: {username, password}, attributes: ["name", "username", "id"]});
         if (user) {
-            const token = await jwt.sign(user, JWT_SECRET_KEY);
+            const token = await jwt.sign(user.dataValues, JWT_SECRET_KEY);
             return {token, user}
         } else {
             throw "Invalid username or password"
