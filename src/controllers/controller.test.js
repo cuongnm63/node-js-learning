@@ -18,7 +18,7 @@ test('Login with invalid username and password', async () => {
     expect(response.status).toBe(401)
 });
 
-test('Login successfully and user token to received data', async () => {
+test('Login successfully and use token to get user list', async () => {
 
     const data = {
         username: "cuongnguyen",
